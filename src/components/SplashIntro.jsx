@@ -27,7 +27,7 @@ const SplashIntro = ({ onComplete }) => {
         >
           {/* Logo with Yoyo effect (shaking under the weight of boxes) */}
           <motion.img
-            src="/src/assets/logo.jpg"
+            src="/logo.jpg"
             alt="Sel3a Sneakers Logo"
             className="w-48 h-48 md:w-64 md:h-64 object-contain mix-blend-multiply drop-shadow-xl"
             animate={{ 

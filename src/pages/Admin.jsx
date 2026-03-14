@@ -781,7 +781,7 @@ const Admin = () => {
           <div className="p-10 border-b-8 border-black flex flex-col items-center justify-center bg-gray-50">
              <div className="relative group cursor-pointer" onClick={() => navigate('/')}>
                <div className="absolute inset-0 bg-brand-red rounded-full blur-xl opacity-0 group-hover:opacity-20 transition-opacity" />
-               <img src="/src/assets/logo.jpg" alt="Logo" className="relative w-32 h-32 object-contain mix-blend-multiply drop-shadow-2xl" />
+               <img src="/logo.jpg" alt="Logo" className="relative w-32 h-32 object-contain mix-blend-multiply drop-shadow-2xl" />
              </div>
              <div className="text-3xl font-black uppercase tracking-tighter mt-6 text-center leading-none">
                <span className="text-brand-red">SEL3A</span><br/>
@@ -830,7 +830,7 @@ const Admin = () => {
       <main className="flex-1 flex flex-col h-full overflow-hidden">
         <header className="px-8 md:px-12 py-10 flex justify-between items-center bg-white border-b-4 border-black">
           <div className="lg:hidden">
-             <img src="/src/assets/logo.jpg" alt="Logo" className="h-10 w-auto" />
+             <img src="/logo.jpg" alt="Logo" className="h-10 w-auto" />
           </div>
           <div>
             <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter drop-shadow-sm">{activeTab}</h1>

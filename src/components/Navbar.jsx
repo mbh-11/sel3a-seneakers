@@ -32,18 +32,18 @@ const Navbar = () => {
               <Link to="/" className="flex-shrink-0 flex items-center group">
                 <img 
                   className="h-16 w-auto transition-all duration-300 group-hover:brightness-110" 
-                  src="/src/assets/logo.jpg" 
+                  src="/logo.jpg" 
                   alt="Sel3a Sneakers" 
                 />
               </Link>
               
               <Link 
                 to="/" 
-                className="ml-3 text-4xl font-black uppercase tracking-tighter flex"
+                className="ml-2 md:ml-3 text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tighter flex"
                 style={{ fontFamily: '"Montserrat", sans-serif' }}
               >
-                <span className="text-white drop-shadow-[2px_2px_0_rgba(0,0,0,1)]" style={{ WebkitTextStroke: '2px black' }}>SEL3A</span>
-                <span className="text-brand-red ml-2 drop-shadow-[2px_2px_0_rgba(0,0,0,1)]" style={{ WebkitTextStroke: '2px black' }}>SNEAKERS</span>
+                <span className="text-white drop-shadow-[1px_1px_0_rgba(0,0,0,1)] md:drop-shadow-[2px_2px_0_rgba(0,0,0,1)]" style={{ WebkitTextStroke: '1px black' }}>SEL3A</span>
+                <span className="text-brand-red ml-1 md:ml-2 drop-shadow-[1px_1px_0_rgba(0,0,0,1)] md:drop-shadow-[2px_2px_0_rgba(0,0,0,1)]" style={{ WebkitTextStroke: '1px black' }}>SNEAKERS</span>
               </Link>
             </motion.div>
 

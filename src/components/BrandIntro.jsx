@@ -76,7 +76,7 @@ const BrandIntro = ({ brand, isVisible, onComplete }) => {
             <>
               {/* Lighter Splash Screen for 'Store' (All) */}
               <motion.img
-                src="/src/assets/logo.jpg"
+                src="/logo.jpg"
                 alt="Sel3a Sneakers Logo"
                 className="w-40 h-40 md:w-56 md:h-56 object-contain mix-blend-multiply drop-shadow-md"
                 animate={{ 

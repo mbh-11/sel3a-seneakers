@@ -150,7 +150,7 @@ const HeroCarousel = ({ products }) => {
       
       {/* Decorative Brand Text Background (Subtle) */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full text-center -z-20 opacity-[0.03] select-none pointer-events-none">
-        <span className="text-[12rem] md:text-[20rem] font-black uppercase leading-none block">
+        <span className="text-[6rem] md:text-[20rem] font-black uppercase leading-none block">
           {currentProduct.brand}
         </span>
       </div>

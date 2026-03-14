@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-24">
           
           <div className="space-y-8">
-             <img src="/src/assets/logo.jpg" alt="Logo" className="h-20 grayscale brightness-200" />
+             <img src="/logo.jpg" alt="Logo" className="h-20 grayscale brightness-200" />
              <p className="text-gray-400 font-bold uppercase tracking-widest text-sm leading-relaxed">
                The premier collective for high-end sneakers and streetwear culture. Authenticity guaranteed.
              </p>

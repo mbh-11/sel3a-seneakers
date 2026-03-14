@@ -99,17 +99,17 @@ const BrandPage = () => {
         } text-white relative overflow-hidden`}>
           {/* Bento dynamic background pattern */}
           <div className="absolute inset-0 opacity-10 pointer-events-none select-none overflow-hidden whitespace-nowrap flex items-center">
-            <span className="text-[150px] font-black leading-none uppercase tracking-tighter">
+            <span className="text-[100px] md:text-[150px] font-black leading-none uppercase tracking-tighter">
               {filterBrand} {filterBrand} {filterBrand}
             </span>
           </div>
           
-          <div className="container mx-auto px-4 relative z-10">
+          <div className="container mx-auto px-4 relative z-10 text-center">
             <motion.h1 
               key={filterBrand}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-7xl md:text-8xl mb-4 leading-none font-black uppercase tracking-tighter"
+              className="text-5xl md:text-8xl mb-4 leading-none font-black uppercase tracking-tighter"
             >
               {filterBrand === 'All' ? 'THE VAULT' : filterBrand}
             </motion.h1>
