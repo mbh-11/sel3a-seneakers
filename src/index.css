@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-red: #E63946;
+  --color-brand-green: #004526;
+  --color-brand-black: #111111;
+  --color-brand-nb: #8E9091;
+  --color-brand-asics: #003399;
+  
+  --font-street: "Montserrat", sans-serif;
+  
+  --shadow-bento: 10px 10px 0px 0px rgba(0,0,0,1);
+  --shadow-glow-red: 0 0 15px rgba(230, 30, 37, 0.5);
+  --shadow-glow-green: 0 0 15px rgba(0, 69, 38, 0.5);
+}
+
+:root {
+  --brand-red: #e61e25;
+  --brand-green: #004526;
+}
+
+body {
+  @apply bg-white text-brand-black font-street overflow-x-hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  @apply font-black uppercase tracking-tighter;
+}
+
+.btn-primary {
+  @apply bg-brand-red text-white py-3 px-8 rounded-none font-bold uppercase tracking-widest transition-all duration-300 transform active:scale-95;
+}
+
+.btn-primary:hover {
+  @apply bg-brand-black shadow-[0_0_20px_rgba(230,30,37,0.6)];
+}
+
+.card-product {
+  @apply relative bg-white border-4 border-black p-4 transition-shadow duration-300;
+}
+
+.card-product:hover {
+  @apply shadow-[8px_8px_0px_0px_rgba(0,0,0,1)];
+}
+
+
+.btn-add-to-cart {
+  @apply w-full bg-brand-black text-white py-3 font-bold uppercase tracking-widest text-sm flex items-center justify-center transition-all duration-300;
+}
+
+.btn-add-to-cart:hover {
+  @apply bg-brand-red shadow-[0_0_15px_rgba(230,30,37,0.4)];
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-brand-black;
+}
+
+/* Loader Animation */
+.loader-container {
+  @apply fixed inset-0 z-[9999] bg-white flex items-center justify-center;
+}
+
+.loader-logo {
+  @apply w-48 animate-pulse;
+}
