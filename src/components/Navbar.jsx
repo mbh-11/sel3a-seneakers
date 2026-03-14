@@ -39,7 +39,7 @@ const Navbar = () => {
               
               <Link 
                 to="/" 
-                className="ml-2 md:ml-3 text-2xl sm:text-3xl md:text-4xl font-black uppercase tracking-tighter flex"
+                className="ml-2 md:ml-3 text-lg sm:text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tighter flex items-center"
                 style={{ fontFamily: '"Montserrat", sans-serif' }}
               >
                 <span className="text-white drop-shadow-[1px_1px_0_rgba(0,0,0,1)] md:drop-shadow-[2px_2px_0_rgba(0,0,0,1)]" style={{ WebkitTextStroke: '1px black' }}>SEL3A</span>

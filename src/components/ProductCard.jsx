@@ -124,12 +124,12 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
       
       {/* Product Information */}
       <div className="space-y-4 px-2 pb-2">
-        <div className="flex justify-between items-start">
+        <div className="flex flex-col sm:flex-row justify-between items-start gap-2 sm:gap-4">
           <div className="flex-1">
-            <p className="text-xs font-black text-gray-400 uppercase tracking-widest mb-1">{product.brand}</p>
-            <h3 className="text-lg leading-tight group-hover:text-brand-red transition-colors font-black uppercase tracking-tighter mb-2">{product.name}</h3>
+            <p className="text-[10px] md:text-xs font-black text-gray-400 uppercase tracking-widest mb-1">{product.brand}</p>
+            <h3 className="text-base md:text-lg leading-tight group-hover:text-brand-red transition-colors font-black uppercase tracking-tighter mb-1 md:mb-2">{product.name}</h3>
           </div>
-          <p className="text-xl font-black ml-4">{product.price} د.ج</p>
+          <p className="text-lg md:text-xl font-black">{product.price} د.ج</p>
         </div>
         
         {/* Size Selection Buttons */}

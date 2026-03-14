@@ -76,7 +76,7 @@ const Home = () => {
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.1 }}
-                className="text-5xl sm:text-7xl md:text-9xl font-black uppercase leading-[0.85] tracking-tighter mb-8"
+                className="text-4xl sm:text-7xl md:text-9xl font-black uppercase leading-[0.85] tracking-tighter mb-8"
               >
                 Step Into <br /> <span className="text-brand-red">Style.</span>
               </motion.h1>
@@ -172,7 +172,7 @@ const Home = () => {
       {/* Banner Section */}
       <section className="bg-brand-red py-24 relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10 text-center">
-          <h2 className="text-5xl md:text-9xl text-white mb-8">FRESH STYLES <br /> ARRIVING WEEKLY</h2>
+          <h2 className="text-4xl sm:text-7xl md:text-9xl text-white mb-8">FRESH STYLES <br /> ARRIVING WEEKLY</h2>
           <p className="text-white font-black text-2xl uppercase mb-12 opacity-80">Don't miss the next drop.</p>
  
         </div>
