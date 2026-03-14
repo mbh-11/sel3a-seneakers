@@ -19,7 +19,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-b-4 border-black">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-24">
           
             <motion.div
@@ -66,20 +66,20 @@ const Navbar = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsSearchOpen(true)}
-              className="p-3 hover:bg-gray-100 transition-colors rounded-full"
+              className="p-2 sm:p-3 hover:bg-gray-100 transition-colors rounded-full"
             >
-              <Search size={22} className="text-black" />
+              <Search size={20} className="text-black sm:w-[22px] sm:h-[22px]" />
             </motion.button>
             
             <Link to="/wishlist">
               <motion.div 
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-3 hover:bg-gray-100 transition-colors rounded-full relative"
+                className="p-2 sm:p-3 hover:bg-gray-100 transition-colors rounded-full relative"
               >
-                <Heart size={22} className={`text-black ${wishlist.length > 0 ? 'fill-brand-red text-brand-red' : ''}`} />
+                <Heart size={20} className={`text-black sm:w-[22px] sm:h-[22px] ${wishlist.length > 0 ? 'fill-brand-red text-brand-red' : ''}`} />
                 {wishlist.length > 0 && (
-                  <span className="absolute top-1 right-1 h-5 w-5 bg-brand-black text-white text-[9px] font-black flex items-center justify-center rounded-full border-2 border-white">
+                  <span className="absolute top-1 right-1 h-4 w-4 sm:h-5 sm:w-5 bg-brand-black text-white text-[8px] sm:text-[9px] font-black flex items-center justify-center rounded-full border-2 border-white">
                     {wishlist.length}
                   </span>
                 )}
@@ -90,11 +90,11 @@ const Navbar = () => {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsCartOpen(true)}
-              className="p-3 hover:bg-gray-100 transition-colors rounded-full relative"
+              className="p-2 sm:p-3 hover:bg-gray-100 transition-colors rounded-full relative"
             >
-              <ShoppingBag size={22} className="text-black" />
+              <ShoppingBag size={20} className="text-black sm:w-[22px] sm:h-[22px]" />
               {cartCount > 0 && (
-                <span className="absolute top-1 right-1 h-5 w-5 bg-brand-red text-white text-[9px] font-black flex items-center justify-center rounded-full border-2 border-white">
+                <span className="absolute top-1 right-1 h-4 w-4 sm:h-5 sm:w-5 bg-brand-red text-white text-[8px] sm:text-[9px] font-black flex items-center justify-center rounded-full border-2 border-white">
                   {cartCount}
                 </span>
               )}
