@@ -1,8 +1,14 @@
 {
+  "framework": "vite",
   "rewrites": [
+    {
+      "source": "/((?!api/|static/|logo.jpg|hero_shoe.png|jordan_red.png|nb_550.png|favicon.ico).*)",
+      "destination": "/index.html"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
 }
+

@@ -33,10 +33,10 @@ const Footer = () => {
           <div>
              <h4 className="text-2xl mb-8 flex items-center">SUPPORT <ArrowUpRight className="ml-2 opacity-50" size={18} /></h4>
              <ul className="space-y-4 font-black uppercase text-sm tracking-widest">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Order Tracking</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Shipping Policy</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Returns & Exchanges</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+              <li><Link to="/store" className="text-gray-400 hover:text-white transition-colors">Order Tracking</Link></li>
+              <li><Link to="/store" className="text-gray-400 hover:text-white transition-colors">Shipping Policy</Link></li>
+              <li><Link to="/store" className="text-gray-400 hover:text-white transition-colors">Returns & Exchanges</Link></li>
+              <li><Link to="/store" className="text-gray-400 hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -88,7 +88,7 @@ const Footer = () => {
               &copy; 2026 SEL3A SNEAKERS. INSPIRED BY STREET CULTURE.
             </p>
             <p className="text-[10px] font-bold text-gray-500">
-              DEVELOPED WITH ❤️ BY <a href="https://github.com/mido" target="_blank" rel="noopener noreferrer" className="hover:text-brand-red transition-colors cursor-pointer">MIDO</a>
+              DEVELOPED WITH ❤️ BY <a href="https://github.com/Mido1" target="_blank" rel="noopener noreferrer" className="hover:text-brand-red transition-colors cursor-pointer">MIDO1</a>
             </p>
           </div>
           <div className="flex space-x-8 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
