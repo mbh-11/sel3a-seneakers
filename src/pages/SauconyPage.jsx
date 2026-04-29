@@ -80,7 +80,7 @@ const SauconyPage = () => {
       />
       <div className="bg-gray-50 min-h-screen pb-24 font-street text-brand-black">
         {/* Header */}
-        <div className="py-8 md:py-20 mb-4 md:mb-12 transition-colors duration-500 bg-[#F8F6F1] text-[#004b91] border-b-4 border-black relative overflow-hidden">
+        <div className="py-8 md:py-20 mb-4 md:mb-12 transition-colors duration-500 bg-[#F8F6F1] text-[#8A8D8F] border-b-4 border-black relative overflow-hidden">
           {/* Bento dynamic background pattern */}
           <div className="absolute inset-0 opacity-10 pointer-events-none select-none overflow-hidden whitespace-nowrap flex items-center">
             <span className="text-[100px] md:text-[150px] font-black leading-none uppercase tracking-tighter">

@@ -158,7 +158,7 @@ const Navbar = () => {
                     className="relative flex items-center justify-between px-5 py-2 transition-all duration-300 border-b-2 border-black/10 last:border-b-0 hover:bg-black/5 overflow-hidden"
                     style={{
                       backgroundColor: link.color,
-                      color: (link.name === 'Onitsuka Tiger' || link.name === 'ON RUNNING') ? '#1A1A1A' : (link.name === 'Saucony' ? '#004b91' : '#ffffff'),
+                      color: (link.name === 'Onitsuka Tiger' || link.name === 'ON RUNNING') ? '#1A1A1A' : (link.name === 'Saucony' ? '#8A8D8F' : '#ffffff'),
                       border: '2px solid black',
                       boxShadow: '3px 3px 0px 0px rgba(0,0,0,1)'
                     }}

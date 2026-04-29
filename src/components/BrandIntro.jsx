@@ -106,7 +106,7 @@ const brandConfigs = {
   Saucony: {
     bg: 'bg-[#F8F6F1]',
     text: 'SAUCONY',
-    textColor: 'text-[#004b91]',
+    textColor: 'text-[#8A8D8F]',
     initial: { scale: 0.5, opacity: 0, filter: 'blur(10px)' },
     animate: {
       scale: 1,

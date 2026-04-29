@@ -201,9 +201,9 @@ const Home = () => {
               to="/saucony" 
               className="bg-[#F8F6F1] border-[3px] border-black p-4 md:p-12 text-center group shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] md:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] transition-all transform hover:scale-[1.03] cursor-pointer flex flex-col items-center justify-center min-h-[120px] md:min-h-[300px] relative overflow-hidden"
             >
-              <div className="absolute inset-0 bg-[#004b91] opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none" />
-              <h2 className="text-xl md:text-5xl font-black text-[#004b91] mb-2 md:mb-4 tracking-tighter group-hover:scale-110 transition-transform uppercase relative z-10">SAUCONY</h2>
-              <p className="font-bold text-[#004b91]/80 uppercase tracking-widest text-[8px] md:text-xs relative z-10">ORIGINALS.</p>
+              <div className="absolute inset-0 bg-[#8A8D8F] opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
+              <h2 className="text-xl md:text-5xl font-black text-[#8A8D8F] mb-2 md:mb-4 tracking-tighter group-hover:scale-110 transition-transform uppercase relative z-10">SAUCONY</h2>
+              <p className="font-bold text-[#8A8D8F]/80 uppercase tracking-widest text-[8px] md:text-xs relative z-10">ORIGINALS.</p>
             </Link>
           </div>
         </div>
