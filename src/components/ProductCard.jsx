@@ -100,7 +100,7 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
                     product.brand?.toLowerCase() === 'saucony' ? 'text-blue-600' :
                     'text-gray-400'
               }`}>{product.brand}</p>
-            <h3 className="product-name text-[10px] md:text-lg leading-tight group-hover:text-brand-red transition-colors font-black uppercase tracking-tighter mb-0.5 md:mb-2 truncate md:whitespace-normal">{product.name}</h3>
+            <h3 className="product-name text-[10px] md:text-lg leading-tight group-hover:text-brand-red transition-colors font-black uppercase tracking-tighter mb-0.5 md:mb-2">{product.name}</h3>
           </div>
           {(() => {
             let finalPrice = product.price;
