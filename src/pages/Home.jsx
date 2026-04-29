@@ -28,16 +28,17 @@ const Home = () => {
         setCarouselProducts(carData || []);
       }
 
-      // Fetch products for Featured Drops (All products, newest first)
+      // Fetch products for Featured Drops (All products, randomized as requested)
       const { data: featData, error: featError } = await supabase
         .from('products')
-        .select('*')
-        .order('created_at', { ascending: false });
+        .select('*');
       
       if (featError) {
         console.error("Error fetching featured products:", featError);
       } else {
-        setFeaturedProducts(featData || []);
+        // Shuffle the array to show products randomly
+        const shuffled = [...(featData || [])].sort(() => 0.5 - Math.random());
+        setFeaturedProducts(shuffled);
       }
     };
 
