@@ -56,7 +56,7 @@ const Navbar = () => {
                     textShadow: '2px 2px 3px rgba(0,0,0,0.4)',
                   }}
                 >
-                  sel3a 
+                  sel3a
                 </span>
                 <span
                   style={{

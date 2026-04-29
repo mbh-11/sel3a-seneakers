@@ -9,11 +9,11 @@
   --color-brand-asics: #C19A6B;
   --color-brand-adidas: #0086D6;
   --color-brand-on: #C9A84C;
-  
+
   --font-street: "Montserrat", sans-serif;
   --font-bubbles: "Rubik Bubbles", system-ui;
-  
-  --shadow-bento: 10px 10px 0px 0px rgba(0,0,0,1);
+
+  --shadow-bento: 10px 10px 0px 0px rgba(0, 0, 0, 1);
   --shadow-glow-red: 0 0 15px rgba(230, 30, 37, 0.5);
   --shadow-glow-green: 0 0 15px rgba(0, 69, 38, 0.5);
 }
@@ -23,7 +23,8 @@
   --brand-green: #004526;
 }
 
-html, body {
+html,
+body {
   @apply overflow-x-hidden;
   width: 100%;
 }
@@ -32,7 +33,12 @@ body {
   @apply bg-white text-brand-black font-street;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   @apply font-black uppercase tracking-tighter;
 }
 
@@ -41,7 +47,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary:hover {
-  @apply bg-brand-black shadow-[0_0_20px_rgba(230,30,37,0.6)];
+  @apply bg-brand-black shadow-[0_0_20px_rgba(230, 30, 37, 0.6)];
 }
 
 .card-product {
@@ -49,7 +55,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .card-product:hover {
-  @apply shadow-[8px_8px_0px_0px_rgba(0,0,0,1)];
+  @apply shadow-[8px_8px_0px_0px_rgba(0, 0, 0, 1)];
 }
 
 
@@ -58,16 +64,18 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-add-to-cart:hover {
-  @apply bg-brand-red shadow-[0_0_15px_rgba(230,30,37,0.4)];
+  @apply bg-brand-red shadow-[0_0_15px_rgba(230, 30, 37, 0.4)];
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
+
 ::-webkit-scrollbar-track {
   @apply bg-gray-100;
 }
+
 ::-webkit-scrollbar-thumb {
   @apply bg-brand-black;
 }
@@ -80,12 +88,14 @@ h1, h2, h3, h4, h5, h6 {
 .loader-logo {
   @apply w-48 animate-pulse;
 }
+
 /* Mobile Optimization (Under 768px) */
 @media (max-width: 768px) {
   .product-grid {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
-    gap: 4px !important; /* Minimal gap for luxury feel */
+    gap: 4px !important;
+    /* Minimal gap for luxury feel */
     padding-left: 4px !important;
     padding-right: 4px !important;
     margin-top: -10px !important;
@@ -102,7 +112,8 @@ h1, h2, h3, h4, h5, h6 {
 
   .product-image-container {
     aspect-ratio: 3/4 !important;
-    border-radius: 8px !important; /* Slight rounding on image only */
+    border-radius: 8px !important;
+    /* Slight rounding on image only */
     overflow: hidden;
     margin-bottom: 8px !important;
   }
@@ -117,7 +128,7 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 2.2rem !important;
     margin-bottom: 0.2rem !important;
   }
-  
+
   .brand-hero-p {
     font-size: 0.65rem !important;
   }
@@ -152,12 +163,15 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Fire/Flame Effect for Price */
 @keyframes flame-glow {
-  0%, 100% { 
-    filter: drop-shadow(0 0 2px rgba(255, 77, 0, 0.4)) drop-shadow(0 0 5px rgba(255, 0, 0, 0.2)); 
+
+  0%,
+  100% {
+    filter: drop-shadow(0 0 2px rgba(255, 77, 0, 0.4)) drop-shadow(0 0 5px rgba(255, 0, 0, 0.2));
     transform: translateY(0) scale(1);
   }
-  50% { 
-    filter: drop-shadow(0 -2px 4px rgba(255, 123, 0, 0.6)) drop-shadow(0 -4px 8px rgba(229, 62, 62, 0.3)); 
+
+  50% {
+    filter: drop-shadow(0 -2px 4px rgba(255, 123, 0, 0.6)) drop-shadow(0 -4px 8px rgba(229, 62, 62, 0.3));
     transform: translateY(-1px) scale(1.02);
   }
 }
@@ -171,14 +185,32 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes pulse-soft {
-  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
-  70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); }
-  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4);
+  }
+
+  70% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 15px rgba(37, 99, 235, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+  }
 }
 
 @keyframes rocket-float {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  50% { transform: translate(5px, -5px) rotate(10deg); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(5px, -5px) rotate(10deg);
+  }
 }
 
 .animate-pulse-soft {
@@ -190,17 +222,28 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @keyframes cloud-float {
-  0% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(10px, 5px) scale(1.05); }
-  66% { transform: translate(-5px, 10px) scale(0.95); }
-  100% { transform: translate(0, 0) scale(1); }
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  33% {
+    transform: translate(10px, 5px) scale(1.05);
+  }
+
+  66% {
+    transform: translate(-5px, 10px) scale(0.95);
+  }
+
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
 }
 
 .brand-halftone {
   background-image: radial-gradient(white 1.5px, transparent 1.5px);
   background-size: 8px 8px;
-  mask-image: radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 70%);
-  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 70%);
+  mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 70%);
+  -webkit-mask-image: radial-gradient(circle, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 70%);
 }
 
 .animate-cloud-float {
@@ -212,10 +255,12 @@ h1, h2, h3, h4, h5, h6 {
     color: #FF4500;
     text-shadow: 0 0 10px #FF4500;
   }
+
   50% {
     color: #FF6B00;
     text-shadow: 0 0 20px #FF6B00;
   }
+
   100% {
     color: #FFD700;
     text-shadow: 0 0 40px #FFD700;

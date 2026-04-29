@@ -19,42 +19,53 @@ const SplashIntro = ({ onComplete }) => {
           className="fixed inset-0 z-[9999] bg-white flex flex-col items-center justify-center overflow-hidden"
           exit={{
             opacity: 0,
-            scale: 0,
             transition: { duration: 0.5, ease: "easeInOut" }
           }}
         >
-          {/* Main Logo Image Restored */}
-          {/* Main Logo Image Restored */}
+          {/* Main Logo Image */}
           <motion.img
             src="/logo.jpg"
             alt="Sel3a Sneakers Logo"
-            className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl mb-8"
+            className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl mb-4"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ 
+              scale: [0, 1.2, 0.9, 1.1, 1],
+              opacity: 1,
+              x: [0, -10, 10, -5, 5, 0],
+              y: [0, 10, -10, 5, -5, 0],
+            }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           />
 
-          {/* Typographic Logo in New Stroked style */}
+          {/* Typographic Text */}
           <motion.div
-            className="flex items-center justify-center font-bold text-[40px] xs:text-[48px] sm:text-[56px] tracking-wide leading-none italic whitespace-nowrap mt-2"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 15 }}
-            style={{ fontFamily: "'Boogaloo', cursive", transform: 'skewX(-5deg)' }}
+            className="flex items-center justify-center tracking-wide leading-none whitespace-nowrap text-[40px] sm:text-[60px] md:text-[90px]"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ 
+              scale: [0, 1.2, 0.9, 1.1, 1],
+              opacity: 1,
+              x: [0, -10, 10, -5, 5, 0],
+              y: [0, 10, -10, 5, -5, 0],
+              skewX: [0, -15, 15, -5, 5, 0]
+            }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            style={{ fontFamily: "'Permanent Marker', cursive", transform: 'rotate(-2deg)' }}
           >
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center drop-shadow-xl">
               <span 
                 style={{ 
                   color: 'white',
                   WebkitTextStroke: '2px black',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
-                  paddingRight: '2px'
+                  textShadow: '3px 3px 0px rgba(0,0,0,0.8)',
                 }}
               >
-                sel3a.
+                sel3a&nbsp;
               </span>
               <span 
                 style={{ 
                   color: '#FF0000',
                   WebkitTextStroke: '2px black',
-                  textShadow: '2px 2px 4px rgba(0,0,0,0.4)'
+                  textShadow: '3px 3px 0px rgba(0,0,0,0.8)'
                 }}
               >
                 sneakers

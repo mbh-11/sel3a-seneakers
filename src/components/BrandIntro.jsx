@@ -194,36 +194,53 @@ const BrandIntro = ({ brand, isVisible, onComplete }) => {
 
           {brand === 'All' ? (
             <div className="flex flex-col items-center">
+              {/* Main Logo Image */}
               <motion.img
                 src="/logo.jpg"
                 alt="Sel3a Sneakers Logo"
-                className="w-40 h-40 md:w-56 md:h-56 object-contain drop-shadow-md mb-8"
+                className="w-48 h-48 md:w-64 md:h-64 object-contain drop-shadow-2xl mb-4"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: [0, 1.2, 0.9, 1.1, 1],
+                  opacity: 1,
+                  x: [0, -10, 10, -5, 5, 0],
+                  y: [0, 10, -10, 5, -5, 0],
+                }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
               />
+
+              {/* Typographic Text */}
               <motion.div
-                className="flex flex-col md:flex-row items-center justify-center font-black text-6xl md:text-9xl leading-none uppercase tracking-[-0.05em]"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                style={{ fontFamily: "'Archivo Black', sans-serif" }}
+                className="flex items-center justify-center tracking-wide leading-none whitespace-nowrap text-[40px] sm:text-[60px] md:text-[90px]"
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ 
+                  scale: [0, 1.2, 0.9, 1.1, 1],
+                  opacity: 1,
+                  x: [0, -10, 10, -5, 5, 0],
+                  y: [0, 10, -10, 5, -5, 0],
+                  skewX: [0, -15, 15, -5, 5, 0]
+                }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
+                style={{ fontFamily: "'Permanent Marker', cursive", transform: 'rotate(-2deg)' }}
               >
-                <div className="flex flex-col md:flex-row items-center justify-center">
+                <div className="flex items-center justify-center drop-shadow-xl">
                   <span 
-                    className="text-white" 
                     style={{ 
-                      WebkitTextStroke: '2.5px black',
-                      textShadow: '6px 6px 0px #000'
+                      color: 'white',
+                      WebkitTextStroke: '2px black',
+                      textShadow: '3px 3px 0px rgba(0,0,0,0.8)',
                     }}
                   >
-                    SEL3A
+                    sel3a&nbsp;
                   </span>
                   <span 
-                    className="text-brand-red md:ml-8 mt-2 md:mt-0" 
                     style={{ 
-                      WebkitTextStroke: '2.5px black',
-                      textShadow: '6px 6px 0px #000'
+                      color: '#FF0000',
+                      WebkitTextStroke: '2px black',
+                      textShadow: '3px 3px 0px rgba(0,0,0,0.8)'
                     }}
                   >
-                    SNEAKERS
+                    sneakers
                   </span>
                 </div>
               </motion.div>
