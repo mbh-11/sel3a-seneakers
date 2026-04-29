@@ -1,41 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import { SlidersHorizontal, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import BrandIntro from '../components/BrandIntro';
 import ProductCard from '../components/ProductCard';
 
-const BrandPage = () => {
-  const location = useLocation();
-  
-  const [filterBrand, setFilterBrand] = useState('All');
+const SauconyPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   
   const [showIntro, setShowIntro] = useState(true);
   const [introFinished, setIntroFinished] = useState(false);
-  const [activeIntroBrand, setActiveIntroBrand] = useState('All');
-
-  const brands = ['All', 'Nike', 'Adidas', 'New Balance', 'Asics', 'Onitsuka Tiger', 'ON RUNNING'];
-
-  // Sync with URL params & trigger intro
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const brand = params.get('brand');
-    const newBrand = brand && brands.includes(brand) ? brand : 'All';
-    if (newBrand !== filterBrand) setFilterBrand(newBrand);
-  }, [location.search]);
 
   // Fetch Supabase data
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data, error } = await supabase.from('products').select('*');
+      // Fetch only products where brand is 'Saucony' (case-insensitive approach if needed, but we use exact match usually)
+      // Since it could be 'Saucony' or 'saucony', we can fetch all and filter, or use ilike
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .ilike('brand', 'saucony');
+        
       if (error) {
         console.error(error);
       } else {
-        setProducts(data);
+        setProducts(data || []);
       }
     };
 
@@ -43,8 +34,8 @@ const BrandPage = () => {
 
     // Set up real-time subscription
     const subscription = supabase
-      .channel('public:products')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, (payload) => {
+      .channel('public:products:saucony')
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'products' }, () => {
         fetchProducts();
       })
       .subscribe();
@@ -54,9 +45,8 @@ const BrandPage = () => {
     };
   }, []);
 
-  // Trigger intro when filterBrand changes (1.5 seconds)
+  // Trigger intro on mount (1.5 seconds)
   useEffect(() => {
-    setActiveIntroBrand(filterBrand);
     setShowIntro(true);
     setIntroFinished(false);
     
@@ -66,13 +56,11 @@ const BrandPage = () => {
     }, 1500);
 
     return () => clearTimeout(timer);
-  }, [filterBrand]);
+  }, []);
 
   const filteredProducts = products.filter(p => {
-    const brandMatch = filterBrand === 'All' || p.brand === filterBrand;
-    const searchMatch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                       p.brand.toLowerCase().includes(searchQuery.toLowerCase());
-    return brandMatch && searchMatch;
+    const searchMatch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return searchMatch;
   });
 
   const containerVariants = {
@@ -86,39 +74,30 @@ const BrandPage = () => {
   return (
     <>
       <BrandIntro 
-        brand={activeIntroBrand} 
+        brand="Saucony" 
         isVisible={showIntro} 
         onComplete={() => setIntroFinished(true)} 
       />
       <div className="bg-gray-50 min-h-screen pb-24 font-street text-brand-black">
         {/* Header */}
-        <div className={`py-8 md:py-20 mb-4 md:mb-12 transition-colors duration-500 ${
-          filterBrand === 'Nike' ? 'bg-brand-red' :
-          filterBrand === 'Adidas' ? 'bg-brand-adidas' :
-          filterBrand === 'New Balance' ? 'bg-brand-nb' :
-          filterBrand === 'Asics' ? 'bg-brand-asics' :
-          filterBrand === 'Onitsuka Tiger' ? 'bg-yellow-400 !text-black' :
-          filterBrand === 'ON RUNNING' ? 'bg-brand-on' :
-          'bg-brand-black'
-        } text-white relative overflow-hidden`}>
+        <div className="py-8 md:py-20 mb-4 md:mb-12 transition-colors duration-500 bg-[#F8F6F1] text-[#004b91] border-b-4 border-black relative overflow-hidden">
           {/* Bento dynamic background pattern */}
           <div className="absolute inset-0 opacity-10 pointer-events-none select-none overflow-hidden whitespace-nowrap flex items-center">
             <span className="text-[100px] md:text-[150px] font-black leading-none uppercase tracking-tighter">
-              {filterBrand} {filterBrand} {filterBrand}
+              SAUCONY SAUCONY SAUCONY
             </span>
           </div>
           
           <div className="container mx-auto px-4 relative z-10 text-center">
             <motion.h1 
-              key={filterBrand}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               className="brand-hero-h1 text-4xl md:text-8xl mb-2 md:mb-4 leading-none font-black uppercase tracking-tighter"
             >
-              {filterBrand === 'All' ? 'THE VAULT' : filterBrand}
+              SAUCONY
             </motion.h1>
             <p className="brand-hero-p font-bold uppercase tracking-widest opacity-80 text-[10px] md:text-base">
-              {filterBrand === 'All' ? 'Authentic Sneakers Only / Fast Worldwide Shipping' : `Premium ${filterBrand} Collection`}
+              Premium Saucony Collection
             </p>
           </div>
         </div>
@@ -139,36 +118,6 @@ const BrandPage = () => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full border-4 border-black p-3 font-bold uppercase placeholder:text-gray-300 outline-none focus:bg-white bg-gray-100 transition-colors rounded-xl"
                 />
-              </div>
-
-              <div>
-                <h3 className="text-xl mb-6 flex items-center border-b-4 border-black pb-2 font-black uppercase tracking-tighter">
-                  <SlidersHorizontal size={20} className="mr-2" /> Brands
-                </h3>
-                <div className="space-y-3">
-                  {brands.map(brand => (
-                    <button
-                      key={brand}
-                      onClick={() => {
-                        setFilterBrand(brand);
-                        setShowMobileFilters(false);
-                      }}
-                      className={`block w-full text-left px-4 py-3 font-black uppercase text-sm tracking-widest transition-all rounded-xl border-2 ${
-                        filterBrand === brand 
-                          ? brand === 'Nike' ? 'bg-brand-red text-white border-brand-red shadow-lg shadow-red-500/20' :
-                            brand === 'Adidas' ? 'bg-brand-adidas text-white border-brand-adidas shadow-lg shadow-blue-500/20' :
-                            brand === 'New Balance' ? 'bg-brand-nb text-white border-brand-nb shadow-lg shadow-gray-500/20' :
-                            brand === 'Asics' ? 'bg-brand-asics text-white border-brand-asics shadow-lg shadow-blue-500/20' :
-                            brand === 'Onitsuka Tiger' ? 'bg-yellow-400 text-black border-yellow-400 shadow-lg shadow-yellow-500/20' :
-                            brand === 'ON RUNNING' ? 'bg-brand-on text-white border-brand-on shadow-lg shadow-yellow-500/10' :
-                            'bg-brand-black text-white border-black'
-                          : 'bg-white border-transparent hover:border-black'
-                      }`}
-                    >
-                      {brand}
-                    </button>
-                  ))}
-                </div>
               </div>
 
               <div className="bg-white p-6 border-4 border-black rounded-2xl shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
@@ -225,4 +174,4 @@ const BrandPage = () => {
   );
 };
 
-export default BrandPage;
+export default SauconyPage;

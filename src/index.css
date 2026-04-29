@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Archivo+Black&family=Anton&family=Chakra+Petch:ital,wght@1,700&family=Rubik+Bubbles&family=Boogaloo&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -6,9 +6,12 @@
   --color-brand-green: #004526;
   --color-brand-black: #111111;
   --color-brand-nb: #8E9091;
-  --color-brand-asics: #003399;
+  --color-brand-asics: #C19A6B;
+  --color-brand-adidas: #0086D6;
+  --color-brand-on: #C9A84C;
   
   --font-street: "Montserrat", sans-serif;
+  --font-bubbles: "Rubik Bubbles", system-ui;
   
   --shadow-bento: 10px 10px 0px 0px rgba(0,0,0,1);
   --shadow-glow-red: 0 0 15px rgba(230, 30, 37, 0.5);
@@ -76,4 +79,165 @@ h1, h2, h3, h4, h5, h6 {
 
 .loader-logo {
   @apply w-48 animate-pulse;
+}
+/* Mobile Optimization (Under 768px) */
+@media (max-width: 768px) {
+  .product-grid {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 4px !important; /* Minimal gap for luxury feel */
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    margin-top: -10px !important;
+  }
+
+  /* Clean Premium Card for Mobile */
+  .mobile-card-clean {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0px !important;
+    padding: 0px !important;
+    background: transparent !important;
+  }
+
+  .product-image-container {
+    aspect-ratio: 3/4 !important;
+    border-radius: 8px !important; /* Slight rounding on image only */
+    overflow: hidden;
+    margin-bottom: 8px !important;
+  }
+
+  .product-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  .brand-hero-h1 {
+    font-size: 2.2rem !important;
+    margin-bottom: 0.2rem !important;
+  }
+  
+  .brand-hero-p {
+    font-size: 0.65rem !important;
+  }
+
+  .product-name {
+    font-size: 0.85rem !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    color: #111 !important;
+    margin-bottom: 2px !important;
+  }
+
+  .product-brand-label {
+    font-size: 0.65rem !important;
+    color: #888 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0px !important;
+  }
+
+  .product-price {
+    font-size: 0.95rem !important;
+    font-weight: 800 !important;
+    color: #111 !important;
+  }
+
+  .container {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+}
+
+/* Fire/Flame Effect for Price */
+@keyframes flame-glow {
+  0%, 100% { 
+    filter: drop-shadow(0 0 2px rgba(255, 77, 0, 0.4)) drop-shadow(0 0 5px rgba(255, 0, 0, 0.2)); 
+    transform: translateY(0) scale(1);
+  }
+  50% { 
+    filter: drop-shadow(0 -2px 4px rgba(255, 123, 0, 0.6)) drop-shadow(0 -4px 8px rgba(229, 62, 62, 0.3)); 
+    transform: translateY(-1px) scale(1.02);
+  }
+}
+
+.hot-price-glow {
+  background: linear-gradient(to top, #c53030 20%, #e53e3e 50%, #f6ad55 90%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: flame-glow 2s infinite ease-in-out;
+  display: inline-block;
+}
+
+@keyframes pulse-soft {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+  70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(37, 99, 235, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+
+@keyframes rocket-float {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(5px, -5px) rotate(10deg); }
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.animate-rocket {
+  animation: rocket-float 3s infinite ease-in-out;
+}
+
+@keyframes cloud-float {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(10px, 5px) scale(1.05); }
+  66% { transform: translate(-5px, 10px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.brand-halftone {
+  background-image: radial-gradient(white 1.5px, transparent 1.5px);
+  background-size: 8px 8px;
+  mask-image: radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 70%);
+  -webkit-mask-image: radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 70%);
+}
+
+.animate-cloud-float {
+  animation: cloud-float 20s infinite ease-in-out;
+}
+
+@keyframes fire-flicker {
+  0% {
+    color: #FF4500;
+    text-shadow: 0 0 10px #FF4500;
+  }
+  50% {
+    color: #FF6B00;
+    text-shadow: 0 0 20px #FF6B00;
+  }
+  100% {
+    color: #FFD700;
+    text-shadow: 0 0 40px #FFD700;
+  }
+}
+
+.price-label {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+  line-height: 1;
+}
+
+.price-fire {
+  animation: fire-flicker 0.3s infinite alternate ease-in-out;
+  margin: 0;
+  line-height: 1;
+}
+
+.checkout-price {
+  color: #000000;
+  font-size: 20px;
+  font-weight: bold;
+  direction: rtl;
 }

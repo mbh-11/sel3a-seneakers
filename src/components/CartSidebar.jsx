@@ -3,7 +3,7 @@ import { useCart } from '../context/CartContext';
 import { X, Plus, Minus, Trash2, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { trackInitiateCheckout } from '../pixelEvents';
+import { getOptimizedImageUrl } from '../utils/imageOptimization';
 
 const CartSidebar = () => {
   const { cartItems, isCartOpen, setIsCartOpen, updateQuantity, removeFromCart, cartTotal } = useCart();
@@ -18,7 +18,7 @@ const CartSidebar = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsCartOpen(false)}
-            className="fixed inset-0 bg-black/60 z-[100] backdrop-blur-sm"
+            className="fixed inset-0 bg-black/70 z-[100]"
           />
 
           {/* Sidebar */}
@@ -33,7 +33,7 @@ const CartSidebar = () => {
               <h2 className="text-2xl font-black uppercase tracking-tighter flex items-center">
                 <ShoppingBag className="mr-3" /> My Bag
               </h2>
-              <button 
+              <button
                 onClick={() => setIsCartOpen(false)}
                 className="hover:rotate-90 transition-transform duration-300"
               >
@@ -46,7 +46,7 @@ const CartSidebar = () => {
                 <div className="h-full flex flex-col items-center justify-center text-center">
                   <ShoppingBag size={64} className="text-gray-300 mb-4" />
                   <p className="text-xl font-bold uppercase tracking-widest text-gray-400">Your bag is empty</p>
-                  <button 
+                  <button
                     onClick={() => setIsCartOpen(false)}
                     className="mt-6 btn-primary"
                   >
@@ -57,7 +57,7 @@ const CartSidebar = () => {
                 cartItems.map((item) => (
                   <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`} className="flex space-x-4 border-b-2 border-gray-100 pb-6 group">
                     <div className="w-24 h-24 bg-gray-100 border-2 border-black flex-shrink-0 overflow-hidden">
-                      <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                      <img src={getOptimizedImageUrl(item.image)} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
                     </div>
                     <div className="flex-grow">
                       <div className="flex justify-between">
@@ -66,18 +66,23 @@ const CartSidebar = () => {
                           <Trash2 size={18} />
                         </button>
                       </div>
-                      <p className="text-sm text-gray-500 font-bold uppercase">{item.brand} | SZ: {item.selectedSize} | {item.selectedColor}</p>
-                      
+                      <p className={`text-sm font-bold uppercase ${item.brand?.toLowerCase() === 'asics' ? 'text-brand-asics' :
+                        item.brand?.toLowerCase() === 'nike' ? 'text-brand-red' :
+                          item.brand?.toLowerCase() === 'adidas' ? 'text-brand-adidas' :
+                            item.brand?.toLowerCase() === 'new balance' ? 'text-brand-nb' :
+                              'text-gray-500'
+                        }`}>{item.brand} | SZ: {item.selectedSize} | {item.selectedColor}</p>
+
                       <div className="mt-4 flex justify-between items-center">
                         <div className="flex items-center border-2 border-black">
-                          <button 
+                          <button
                             onClick={() => updateQuantity(item.id, item.selectedSize, item.selectedColor, -1)}
                             className="px-2 py-1 hover:bg-gray-100"
                           >
                             <Minus size={16} />
                           </button>
                           <span className="px-4 font-black">{item.quantity}</span>
-                          <button 
+                          <button
                             onClick={() => updateQuantity(item.id, item.selectedSize, item.selectedColor, 1)}
                             className="px-2 py-1 hover:bg-gray-100"
                           >
@@ -98,12 +103,9 @@ const CartSidebar = () => {
                   <span className="text-lg font-bold uppercase tracking-widest">Total</span>
                   <span className="text-3xl font-black">{cartTotal} د.ج</span>
                 </div>
-                <Link 
-                  to="/checkout" 
-                  onClick={() => {
-                    setIsCartOpen(false);
-                    trackInitiateCheckout(cartTotal, cartItems);
-                  }}
+                <Link
+                  to="/checkout"
+                  onClick={() => setIsCartOpen(false)}
                   className="w-full btn-primary block text-center"
                 >
                   Checkout Now

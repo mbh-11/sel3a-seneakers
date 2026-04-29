@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Search as SearchIcon, ArrowRight, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
+import { getOptimizedImageUrl } from '../utils/imageOptimization';
 
 const SearchOverlay = ({ isOpen, onClose }) => {
   const [query, setQuery] = useState('');
@@ -57,7 +58,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
         >
           {/* Close Button */}
           <div className="flex justify-end mb-8">
-            <button 
+            <button
               onClick={onClose}
               className="p-4 bg-gray-100 rounded-full hover:bg-black hover:text-white transition-all transform hover:rotate-90"
             >
@@ -67,7 +68,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
 
           <div className="max-w-4xl mx-auto w-full">
             <div className="relative mb-12">
-              <input 
+              <input
                 autoFocus
                 type="text"
                 placeholder="Search Sneakers..."
@@ -88,19 +89,19 @@ const SearchOverlay = ({ isOpen, onClose }) => {
             <div className="space-y-6 max-h-[60vh] overflow-y-auto pr-4 custom-scrollbar">
               {results.length > 0 ? (
                 results.map((product) => (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     key={product.id}
                   >
-                    <Link 
+                    <Link
                       to={`/store?brand=${product.brand}`}
                       onClick={onClose}
                       className="flex items-center justify-between p-6 border-4 border-black hover:bg-black hover:text-white transition-all group rounded-2xl"
                     >
                       <div className="flex items-center">
                         <div className="w-20 h-20 bg-gray-100 rounded-xl overflow-hidden mr-6 border-2 border-black group-hover:border-white transition-colors">
-                          <img src={product.image} alt={product.name} className="w-full h-full object-cover" />
+                          <img src={getOptimizedImageUrl(product.image)} alt={product.name} className="w-full h-full object-cover" />
                         </div>
                         <div>
                           <p className="text-[10px] font-black uppercase tracking-widest opacity-60">{product.brand}</p>
@@ -121,18 +122,18 @@ const SearchOverlay = ({ isOpen, onClose }) => {
 
             {/* Helper Tags */}
             <div className="mt-12">
-               <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-4">Trending Searches</p>
-               <div className="flex flex-wrap gap-4">
-                 {['Nike', 'Asics', 'New Balance', 'Jordan'].map(tag => (
-                   <button 
+              <p className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-4">Trending Searches</p>
+              <div className="flex flex-wrap gap-4">
+                {['Nike', 'Asics', 'New Balance', 'Jordan'].map(tag => (
+                  <button
                     key={tag}
                     onClick={() => setQuery(tag)}
                     className="px-6 py-3 border-2 border-black rounded-xl font-black uppercase text-xs hover:bg-black hover:text-white transition-all hover:-translate-y-1"
-                   >
-                     {tag}
-                   </button>
-                 ))}
-               </div>
+                  >
+                    {tag}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         </motion.div>

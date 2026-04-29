@@ -5,20 +5,23 @@ import { useCart } from '../context/CartContext';
 import { ShoppingBag, Heart, Star, SlidersHorizontal, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
 import BrandIntro from '../components/BrandIntro';
+import ProductCard from '../components/ProductCard';
+import { trackSearch, trackPageView } from '../pixelEvents';
 
 const Store = () => {
   const location = useLocation();
   const { addToCart, toggleWishlist, wishlist } = useCart();
-  
+
   const [filterBrand, setFilterBrand] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
-  
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
+
   const [showIntro, setShowIntro] = useState(true);
   const [introFinished, setIntroFinished] = useState(false);
   const [activeIntroBrand, setActiveIntroBrand] = useState('All');
   const [products, setProducts] = useState([]);
 
-  const brands = ['All', 'Nike', 'New Balance', 'Asics'];
+  const brands = ['All', 'Nike', 'Adidas', 'New Balance', 'Asics', 'Onitsuka Tiger', 'ON RUNNING'];
 
   // Fetch products from Supabase
   useEffect(() => {
@@ -46,6 +49,20 @@ const Store = () => {
     };
   }, []);
 
+  useEffect(() => {
+    trackPageView();
+  }, []);
+
+  // Track search with 2s debounce to give Meta time to learn without noise.
+  useEffect(() => {
+    if (searchQuery.trim().length > 2) {
+      const timer = setTimeout(() => {
+        trackSearch(searchQuery);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [searchQuery]);
+
   // Sync with URL params & trigger intro
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -59,7 +76,7 @@ const Store = () => {
     setActiveIntroBrand(filterBrand);
     setShowIntro(true);
     setIntroFinished(false);
-    
+
     // Auto-hide the intro to allow it to exit
     const timer = setTimeout(() => {
       setShowIntro(false);
@@ -70,8 +87,8 @@ const Store = () => {
 
   const filteredProducts = products.filter(p => {
     const brandMatch = filterBrand === 'All' || p.brand === filterBrand;
-    const searchMatch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                       p.brand.toLowerCase().includes(searchQuery.toLowerCase());
+    const searchMatch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      p.brand.toLowerCase().includes(searchQuery.toLowerCase());
     return brandMatch && searchMatch;
   });
 
@@ -85,8 +102,8 @@ const Store = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 50 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: { type: 'spring', stiffness: 200, damping: 20 }
     }
@@ -94,50 +111,73 @@ const Store = () => {
 
   return (
     <>
-      <BrandIntro 
-        brand={activeIntroBrand} 
-        isVisible={showIntro} 
-        onComplete={() => setIntroFinished(true)} 
+      <BrandIntro
+        brand={activeIntroBrand}
+        isVisible={showIntro}
+        onComplete={() => setIntroFinished(true)}
       />
       <div className="bg-white min-h-screen pb-24">
         {/* Header */}
-        <div className="bg-brand-black text-white py-20 mb-12">
+        <div
+          className="py-8 md:py-20 mb-4 md:mb-12 transition-all duration-500"
+          style={filterBrand === 'ON RUNNING' ? {
+            background: 'linear-gradient(135deg, #1A1A1A, #C9A84C, #F5E6A3)'
+          } : {
+            background: '#1A1A1A'
+          }}
+        >
           <div className="container mx-auto px-4">
-            <h1 className="text-7xl md:text-8xl mb-4 leading-none">THE VAULT</h1>
-            <p className="font-bold uppercase tracking-widest text-brand-red">Authentic Sneakers Only / Fast Worldwide Shipping</p>
+            {filterBrand === 'ON RUNNING' ? (
+              <>
+                <h1 className="brand-hero-h1 text-5xl md:text-8xl mb-2 md:mb-4 leading-none uppercase tracking-tighter" style={{ color: '#FFFFFF', textShadow: '2px 2px 4px #C9A84C' }}>ON RUNNING</h1>
+                <p className="brand-hero-p font-bold uppercase tracking-widest text-[10px] md:text-base" style={{ color: '#F5E6A3' }}>PREMIUM ON RUNNING COLLECTION</p>
+              </>
+            ) : (
+              <>
+                <h1 className="brand-hero-h1 text-5xl md:text-8xl mb-2 md:mb-4 leading-none uppercase tracking-tighter text-white">THE VAULT</h1>
+                <p className="brand-hero-p font-bold uppercase tracking-widest text-brand-red text-[10px] md:text-base">Authentic Sneakers Only / Fast Worldwide Shipping</p>
+              </>
+            )}
           </div>
         </div>
 
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-12">
-            
+
             {/* Filters Sidebar */}
-            <div className="lg:w-64 flex-shrink-0 space-y-10">
+            <div className={`lg:w-64 flex-shrink-0 space-y-8 ${showMobileFilters ? 'block' : 'hidden lg:block'}`}>
               <div>
-                <h3 className="text-xl mb-6 flex items-center border-b-4 border-black pb-2">
+                <h3 className="text-xl mb-6 flex items-center border-b-4 border-black pb-2 font-black uppercase tracking-tighter">
                   <Search size={20} className="mr-2" /> Search
                 </h3>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   placeholder="Product name..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full border-4 border-black p-3 font-bold uppercase placeholder:text-gray-300 outline-none focus:bg-gray-50 bg-white"
+                  className="w-full border-4 border-black p-3 font-bold uppercase placeholder:text-gray-300 outline-none focus:bg-white bg-gray-50 transition-colors"
                 />
               </div>
 
               <div>
-                <h3 className="text-xl mb-6 flex items-center border-b-4 border-black pb-2">
+                <h3 className="text-xl mb-6 flex items-center border-b-4 border-black pb-2 font-black uppercase tracking-tighter">
                   <SlidersHorizontal size={20} className="mr-2" /> Brands
                 </h3>
                 <div className="space-y-3">
                   {brands.map(brand => (
                     <button
                       key={brand}
-                      onClick={() => setFilterBrand(brand)}
-                      className={`block w-full text-left px-4 py-2 font-black uppercase text-sm tracking-widest transition-all ${
-                        filterBrand === brand ? 'bg-brand-red text-white' : 'hover:bg-gray-100'
-                      }`}
+                      onClick={() => {
+                        setFilterBrand(brand);
+                        setShowMobileFilters(false);
+                      }}
+                      className={`block w-full text-left px-4 py-3 font-black uppercase text-sm tracking-widest transition-all border-2 ${filterBrand === brand ?
+                        (brand === 'Asics' ? 'bg-brand-asics text-white border-brand-asics' :
+                          brand === 'Onitsuka Tiger' ? 'bg-yellow-400 !text-black border-yellow-400' :
+                            brand === 'ON RUNNING' ? 'bg-brand-on text-white border-brand-on' :
+                              'bg-brand-red text-white border-brand-red')
+                        : 'bg-white border-transparent hover:border-black'
+                        }`}
                     >
                       {brand}
                     </button>
@@ -155,11 +195,19 @@ const Store = () => {
 
             {/* Product Grid */}
             <div className="flex-grow">
-              <div className="flex justify-between items-center mb-10 border-b-4 border-black pb-4">
-                <span className="font-black uppercase tracking-widest text-sm">Showing {filteredProducts.length} Results</span>
-                <div className="flex items-center space-x-4">
-                  <span className="text-xs font-black uppercase opacity-40">Sort By:</span>
-                  <select className="font-black uppercase text-xs border-2 border-black p-1 outline-none bg-white">
+              <div className="flex justify-between items-center mb-6 md:mb-10 border-b-4 border-black pb-4">
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => setShowMobileFilters(!showMobileFilters)}
+                    className="lg:hidden flex items-center gap-2 bg-black text-white px-3 py-2 rounded-lg font-black text-[10px] uppercase shadow-lg active:scale-95 transition-transform"
+                  >
+                    <SlidersHorizontal size={14} /> Filter
+                  </button>
+                  <span className="font-black uppercase tracking-widest text-[10px] md:text-sm">Showing {filteredProducts.length} Results</span>
+                </div>
+                <div className="flex items-center space-x-2 md:space-x-4">
+                  <span className="hidden md:inline text-xs font-black uppercase opacity-40">Sort By:</span>
+                  <select className="font-black uppercase text-[10px] md:text-xs border-2 border-black p-1 md:p-2 outline-none bg-white rounded-lg">
                     <option>Latest</option>
                     <option>Price: Low to High</option>
                     <option>Price: High to Low</option>
@@ -172,57 +220,14 @@ const Store = () => {
                   <h3 className="text-3xl text-gray-300 uppercase italic">No products found matching your search.</h3>
                 </div>
               ) : (
-                <motion.div 
+                <motion.div
                   variants={containerVariants}
                   initial="hidden"
                   animate={introFinished ? "visible" : "hidden"}
-                  className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8"
+                  className="product-grid grid grid-cols-2 sm:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-8"
                 >
                   {filteredProducts.map((product) => (
-                    <motion.div 
-                      key={product.id}
-                      variants={itemVariants}
-                      whileHover={{ y: -5 }}
-                      className="card-product group"
-                    >
-                      <button 
-                        onClick={() => toggleWishlist(product)}
-                        className="absolute top-4 right-4 z-10 p-2 bg-white border-2 border-black hover:bg-black hover:text-white transition-colors"
-                      >
-                        <Heart size={20} fill={wishlist.find(w => w.id === product.id) ? "black" : "none"} />
-                      </button>
-                      
-                      <div className="aspect-square bg-gray-50 mb-6 overflow-hidden">
-                        <img 
-                          src={product.image} 
-                          alt={product.name} 
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div className="flex justify-between items-start">
-                          <div>
-                            <p className="text-xs font-black text-gray-400 uppercase tracking-widest">{product.brand}</p>
-                            <h3 className="text-xl leading-tight group-hover:text-brand-red transition-colors">{product.name}</h3>
-                          </div>
-                          <p className="text-xl font-black">{product.price} د.ج</p>
-                        </div>
-                        
-                        <div className="flex flex-wrap gap-2 pt-2">
-                          {product.sizes.map(size => (
-                            <span key={size} className="text-[10px] font-black border border-gray-200 px-2 py-0.5 hover:border-black cursor-pointer">{size}</span>
-                          ))}
-                        </div>
-
-                        <button 
-                          onClick={() => addToCart(product, product.sizes[0], product.colors[0])}
-                          className="btn-add-to-cart mt-4"
-                        >
-                          <ShoppingBag size={18} className="mr-2" /> Add to Bag
-                        </button>
-                      </div>
-                    </motion.div>
+                    <ProductCard key={product.id} product={product} />
                   ))}
                 </motion.div>
               )}
