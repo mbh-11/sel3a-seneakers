@@ -31,7 +31,14 @@ export const trackPixelEvent = async (eventName, params = {}, rawUserData = {}, 
 
   // 2. Server-side Conversions API (CAPI) Tracking (via Vercel function)
   try {
-    const testCode = process.env.NEXT_PUBLIC_FB_TEST_CODE || null;
+    const testCode = import.meta.env.VITE_FB_TEST_CODE || null;
+    const pixelId = import.meta.env.VITE_META_PIXEL_ID;
+
+    // Guard: Only send if we have a Pixel ID configured (don't expose Access Token to client)
+    if (!pixelId) {
+      console.warn(`[CAPI Skip]: Pixel ID not found in env, skipping server-side event for ${eventName}`);
+      return;
+    }
 
     await fetch('/api/meta-capi', {
       method: 'POST',
