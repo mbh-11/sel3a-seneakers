@@ -85,7 +85,7 @@ const Footer = () => {
               <a href="mailto:midojf4@gmail.com" className="text-gray-400 hover:text-white transition-all hover:scale-110" title="Email MBH">
                 <Mail size={12} />
               </a>
-              <a href="https://www.instagram.com/mbh_service/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-all hover:scale-110" title="Instagram MBH">
+              <a href="https://www.instagram.com/mido_mesbah_11/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-all hover:scale-110" title="Instagram MBH">
                 <Instagram size={12} />
               </a>
             </div>
