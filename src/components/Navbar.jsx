@@ -45,16 +45,15 @@ const Navbar = () => {
 
             <Link
               to="/"
-              className="ml-2 flex items-center font-bold text-[22px] sm:text-[50px] md:text-[68px] tracking-wide leading-none group italic whitespace-nowrap overflow-hidden"
-              style={{ fontFamily: "'Boogaloo', cursive", transform: 'skewX(-5deg)' }}
+              className="ml-2 flex items-center text-[22px] sm:text-[35px] md:text-[45px] tracking-wide leading-none group whitespace-nowrap overflow-hidden transition-transform hover:scale-105"
+              style={{ fontFamily: "'Permanent Marker', cursive", transform: 'rotate(-2deg)' }}
             >
-              <div className="flex items-center overflow-hidden text-ellipsis">
+              <div className="flex items-center overflow-hidden text-ellipsis drop-shadow-md">
                 <span
                   style={{
                     color: 'white',
                     WebkitTextStroke: '1px black',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.4)',
-                    paddingRight: '1px'
+                    textShadow: '2px 2px 3px rgba(0,0,0,0.4)',
                   }}
                 >
                   sel3a.
@@ -63,7 +62,7 @@ const Navbar = () => {
                   style={{
                     color: '#FF0000',
                     WebkitTextStroke: '1px black',
-                    textShadow: '2px 2px 4px rgba(0,0,0,0.4)'
+                    textShadow: '2px 2px 3px rgba(0,0,0,0.4)',
                   }}
                 >
                   sneakers
