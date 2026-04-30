@@ -18,6 +18,31 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
   const isOutOfStock = Object.values(inventory).every(qty => qty === 0);
   const isSizeOutOfStock = (size) => (inventory[size] || 0) === 0;
 
+  // Price Calculation Logic
+  let finalPrice = product.price;
+  let finalOldPrice = product.old_price || product.oldPrice;
+  let finalDiscount = product.discount;
+
+  if (typeof product.price === 'string' && !finalOldPrice) {
+    const cleaned = product.price.replace(/د\.ج/g, ' ').trim();
+    const parts = cleaned.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) {
+      finalPrice = parts[0];
+      finalOldPrice = parts[1];
+      if (parts.length >= 3) {
+        finalDiscount = parts[2];
+      }
+    }
+  }
+
+  if (finalOldPrice && finalPrice && !finalDiscount) {
+    const oldP = parseFloat(String(finalOldPrice).replace(/[^0-9.]/g, ''));
+    const newP = parseFloat(String(finalPrice).replace(/[^0-9.]/g, ''));
+    if (oldP > newP) {
+      finalDiscount = Math.round(((oldP - newP) / oldP) * 100) + '%';
+    }
+  }
+
   const handleAddToCart = async (e) => {
     e.stopPropagation();
 
@@ -74,12 +99,17 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
 
       <div
         onClick={() => navigate(`/checkout/${product.id}`, { state: { product } })}
-        className="product-image-container relative aspect-[3/4] md:aspect-square bg-gray-50 mb-2 md:mb-6 rounded-xl overflow-hidden cursor-pointer shrink-0"
+        className="product-image-container relative w-full aspect-[3/2] bg-gray-50 mb-2 md:mb-6 rounded-xl overflow-hidden cursor-pointer shrink-0 flex items-center justify-center"
       >
+        {(finalOldPrice || finalDiscount) && (
+          <div className="absolute top-2 left-2 z-20 bg-brand-red text-white text-[10px] md:text-xs font-black px-2 py-1 rounded-md shadow-md transform -rotate-2">
+            {finalDiscount ? (String(finalDiscount).includes('-') ? finalDiscount : `-${finalDiscount}`) : 'SALE'}
+          </div>
+        )}
         <img
           src={getOptimizedImageUrl(product.image)}
           alt={product.name}
-          className="product-image w-full h-full min-h-[150px] object-cover group-hover:scale-110 transition-transform duration-500"
+          className="product-image w-full h-full object-contain group-hover:scale-110 transition-transform duration-500"
           loading="lazy"
           onError={(e) => {
             e.target.onerror = null;
@@ -102,47 +132,20 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
               }`}>{product.brand}</p>
             <h3 className="product-name text-[10px] md:text-lg leading-tight group-hover:text-brand-red transition-colors font-black uppercase tracking-tighter mb-0.5 md:mb-2">{product.name}</h3>
           </div>
-          {(() => {
-            let finalPrice = product.price;
-            let finalOldPrice = product.old_price || product.oldPrice;
-            let finalDiscount = product.discount;
-
-            if (typeof product.price === 'string' && !finalOldPrice) {
-              const cleaned = product.price.replace(/د\.ج/g, ' ').trim();
-              const parts = cleaned.split(/\s+/).filter(Boolean);
-              if (parts.length >= 2) {
-                finalPrice = parts[0];
-                finalOldPrice = parts[1];
-                if (parts.length >= 3) {
-                  finalDiscount = parts[2];
-                }
-              }
-            }
-
-            return (
-              <div className="flex flex-col gap-1.5 w-full mt-2" dir="rtl">
-                {/* Line 1: Discount Badge + Old Price */}
-                {(finalOldPrice || finalDiscount) && (
-                  <div className="flex items-center gap-2">
-                    {finalDiscount && (
-                      <span className="bg-[#CC0000] text-white px-[6px] py-[2px] rounded-[4px] text-[12px] font-bold leading-none inline-flex items-center justify-center shrink-0" dir="ltr">
-                        {String(finalDiscount).includes('-') ? finalDiscount : `-${finalDiscount}`}{String(finalDiscount).includes('%') ? '' : '%'}
-                      </span>
-                    )}
-                    {finalOldPrice && (
-                      <span className="line-through text-[#999999] text-[13px] font-bold leading-none shrink-0 whitespace-nowrap mt-0.5">
-                        {String(finalOldPrice).includes('د.ج') ? finalOldPrice : `${finalOldPrice} د.ج`}
-                      </span>
-                    )}
-                  </div>
-                )}
-                {/* Line 2: New Price */}
-                <p className="text-[22px] font-bold text-[#000000] leading-none whitespace-nowrap">
-                  {String(finalPrice).includes('د.ج') ? finalPrice : `${finalPrice} د.ج`}
-                </p>
+          <div className="flex flex-col gap-1.5 w-full mt-2" dir="rtl">
+            {/* Line 1: Old Price */}
+            {finalOldPrice && (
+              <div className="flex items-center gap-2">
+                <span className="line-through text-[#999999] text-[13px] font-bold leading-none shrink-0 whitespace-nowrap mt-0.5">
+                  {String(finalOldPrice).includes('د.ج') ? finalOldPrice : `${finalOldPrice} د.ج`}
+                </span>
               </div>
-            );
-          })()}
+            )}
+            {/* Line 2: New Price */}
+            <p className="text-[22px] font-black text-[#000000] leading-none whitespace-nowrap">
+              {String(finalPrice).includes('د.ج') ? finalPrice : `${finalPrice} د.ج`}
+            </p>
+          </div>
         </div>
 
         {/* Mobile Action Area - Removed Size Buttons from Card */}

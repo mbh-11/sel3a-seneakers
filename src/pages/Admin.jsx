@@ -254,6 +254,7 @@ const Admin = () => {
     name: '',
     brand: 'Nike',
     price: '',
+    oldPrice: '',
     description: '',
     category: 'Lifestyle',
     sizes: '40, 41, 42, 43, 44, 45',
@@ -272,7 +273,7 @@ const Admin = () => {
 
   const resetForm = () => {
     setFormData({
-      name: '', brand: 'Nike', price: '', description: '',
+      name: '', brand: 'Nike', price: '', oldPrice: '', description: '',
       category: 'Lifestyle', sizes: '40, 41, 42, 43, 44, 45',
       colors: 'Default',
       imageFile: null, imageUrl: '', mainImagePreview: '',
@@ -336,6 +337,7 @@ const Admin = () => {
       name: product.name,
       brand: product.brand,
       price: product.price,
+      oldPrice: product.old_price || product.oldPrice || '',
       description: product.description || '',
       category: product.category || 'Lifestyle',
       sizes: Array.isArray(product.sizes) ? product.sizes.join(', ') : (product.sizes || ''),
@@ -376,6 +378,7 @@ const Admin = () => {
         name: formData.name,
         brand: formData.brand,
         price: parseFloat(formData.price),
+        old_price: formData.oldPrice ? parseFloat(formData.oldPrice) : null,
         description: formData.description,
         category: formData.category,
         image: finalImageUrl,
@@ -771,15 +774,19 @@ const Admin = () => {
                         <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Product Title</label>
                         <input required type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} className="w-full border-4 border-black p-4 rounded-2xl font-black uppercase outline-none focus:bg-gray-50" />
                       </div>
-                      <div>
+                      <div className="col-span-2">
                         <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Brand</label>
                         <select value={formData.brand} onChange={e => setFormData({ ...formData, brand: e.target.value })} className="w-full border-4 border-black p-4 rounded-2xl font-black uppercase outline-none cursor-pointer bg-white">
                           <option>Nike</option><option>Adidas</option><option>New Balance</option><option>Asics</option><option>Onitsuka Tiger</option><option>ON RUNNING</option><option>Saucony</option>
                         </select>
                       </div>
                       <div>
-                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Price (د.ج)</label>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">New Price (د.ج)</label>
                         <input required type="number" step="0.01" value={formData.price} onChange={e => setFormData({ ...formData, price: e.target.value })} className="w-full border-4 border-black p-4 rounded-2xl font-black uppercase outline-none focus:bg-gray-50" />
+                      </div>
+                      <div>
+                        <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Old Price (د.ج)</label>
+                        <input type="number" step="0.01" value={formData.oldPrice} onChange={e => setFormData({ ...formData, oldPrice: e.target.value })} className="w-full border-4 border-black p-4 rounded-2xl font-black uppercase outline-none focus:bg-gray-50" placeholder="Optional" />
                       </div>
                       <div className="col-span-2">
                         <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Available Sizes (Comma separated)</label>
