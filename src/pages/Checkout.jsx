@@ -269,6 +269,47 @@ const Checkout = () => {
   const [phoneError, setPhoneError] = useState('');
 
   const activeProduct = directProduct || cartItems[0];
+  
+  // Price Calculation Logic for Display
+  let finalPrice = activeProduct?.price || 0;
+  let finalOldPrice = activeProduct?.old_price || activeProduct?.oldPrice;
+  let finalDiscount = activeProduct?.discount;
+
+  if (typeof activeProduct?.price === 'string' && !finalOldPrice) {
+    const cleaned = activeProduct.price.replace(/د\.ج/g, ' ').trim();
+    const parts = cleaned.split(/\s+/).filter(Boolean);
+    if (parts.length >= 2) {
+      finalPrice = parts[0];
+      finalOldPrice = parts[1];
+      if (parts.length >= 3) {
+        finalDiscount = parts[2];
+      }
+    }
+  }
+
+  let oldP = 0;
+  let newP = 0;
+  let isValidDiscount = false;
+
+  if (finalOldPrice && finalPrice) {
+    oldP = parseFloat(String(finalOldPrice).replace(/[^0-9.]/g, ''));
+    newP = parseFloat(String(finalPrice).replace(/[^0-9.]/g, ''));
+    if (oldP > newP) {
+      isValidDiscount = true;
+      if (!finalDiscount) {
+        finalDiscount = Math.round(((oldP - newP) / oldP) * 100) + '%';
+      }
+    } else {
+      finalOldPrice = null;
+      finalDiscount = null;
+    }
+  }
+
+  const formatPriceNum = (p) => {
+    if (!p) return '';
+    return String(p).replace(/د\.ج/gi, '').trim();
+  };
+
   const itemsPriceTotal = itemsToBuy.reduce((sum, item) => sum + (item.price * (item.quantity || 1)), 0);
 
   // Calculate potential shipping fees
@@ -451,18 +492,20 @@ const Checkout = () => {
             <div className="flex flex-col gap-1 items-end">
               <p className="price-label">سعر</p>
               <p className="checkout-price">
-                <span className="amount">{String(activeProduct.price).replace(/د\.ج/g, '').trim()}</span>
+                <span className="amount">{formatPriceNum(finalPrice)}</span>
                 <span className="currency"> د.ج</span>
               </p>
             </div>
-            <div className="flex items-center gap-2">
-              <span className="bg-red-50 text-brand-red text-[11px] font-black px-2 py-1 rounded-full border border-red-100">
-                -19%
-              </span>
-              <p className="text-xs text-gray-300 line-through font-bold opacity-80">
-                {Math.round(activeProduct.price * 1.2)} د.ج
-              </p>
-            </div>
+            {isValidDiscount && (
+              <div className="flex items-center gap-2">
+                <span className="bg-red-50 text-brand-red text-[11px] font-black px-2 py-1 rounded-full border border-red-100">
+                  {finalDiscount ? (String(finalDiscount).includes('-') ? finalDiscount : `-${finalDiscount}`) : 'SALE'}
+                </span>
+                <p className="text-xs text-gray-300 line-through font-bold opacity-80">
+                  {formatPriceNum(finalOldPrice)} د.ج
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

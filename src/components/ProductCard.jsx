@@ -35,13 +35,29 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
     }
   }
 
-  if (finalOldPrice && finalPrice && !finalDiscount) {
-    const oldP = parseFloat(String(finalOldPrice).replace(/[^0-9.]/g, ''));
-    const newP = parseFloat(String(finalPrice).replace(/[^0-9.]/g, ''));
+  let oldP = 0;
+  let newP = 0;
+  let isValidDiscount = false;
+
+  if (finalOldPrice && finalPrice) {
+    oldP = parseFloat(String(finalOldPrice).replace(/[^0-9.]/g, ''));
+    newP = parseFloat(String(finalPrice).replace(/[^0-9.]/g, ''));
     if (oldP > newP) {
-      finalDiscount = Math.round(((oldP - newP) / oldP) * 100) + '%';
+      isValidDiscount = true;
+      if (!finalDiscount) {
+        finalDiscount = Math.round(((oldP - newP) / oldP) * 100) + '%';
+      }
+    } else {
+      finalOldPrice = null;
+      finalDiscount = null;
     }
   }
+
+  const formatPrice = (p) => {
+    if (!p) return '';
+    const val = String(p).replace(/د\.ج/gi, '').trim();
+    return `${val} د.ج`;
+  };
 
   const handleAddToCart = async (e) => {
     e.stopPropagation();
@@ -101,8 +117,8 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
         onClick={() => navigate(`/checkout/${product.id}`, { state: { product } })}
         className="product-image-container relative w-full aspect-[3/2] bg-gray-50 mb-2 md:mb-6 rounded-xl overflow-hidden cursor-pointer shrink-0 flex items-center justify-center"
       >
-        {(finalOldPrice || finalDiscount) && (
-          <div className="absolute top-2 left-2 z-20 bg-brand-red text-white text-[10px] md:text-xs font-black px-2 py-1 rounded-md shadow-md transform -rotate-2">
+        {isValidDiscount && (
+          <div className="absolute top-3 left-3 z-20 bg-red-50 text-brand-red border border-red-100 text-[10px] md:text-xs font-black px-2.5 py-1 rounded-md shadow-sm">
             {finalDiscount ? (String(finalDiscount).includes('-') ? finalDiscount : `-${finalDiscount}`) : 'SALE'}
           </div>
         )}
@@ -122,7 +138,7 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
       {/* Product Information */}
       <div className="flex-grow flex flex-col justify-between space-y-1 md:space-y-4 px-0 md:px-2 pb-1 md:pb-2 text-left">
         <div className="flex flex-col justify-between items-start gap-0.5 md:gap-4">
-          <div className="flex-1 min-w-0">
+          <div className="flex-1 min-w-0 w-full">
             <p className={`product-brand-label text-[8px] md:text-xs font-black uppercase tracking-widest mb-0 ${product.brand?.toLowerCase() === 'asics' ? 'text-brand-asics' :
               product.brand?.toLowerCase() === 'nike' ? 'text-brand-red' :
                 product.brand?.toLowerCase() === 'adidas' ? 'text-brand-adidas' :
@@ -132,19 +148,17 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
               }`}>{product.brand}</p>
             <h3 className="product-name text-[10px] md:text-lg leading-tight group-hover:text-brand-red transition-colors font-black uppercase tracking-tighter mb-0.5 md:mb-2">{product.name}</h3>
           </div>
-          <div className="flex flex-col gap-1.5 w-full mt-2" dir="rtl">
-            {/* Line 1: Old Price */}
-            {finalOldPrice && (
-              <div className="flex items-center gap-2">
-                <span className="line-through text-[#999999] text-[13px] font-bold leading-none shrink-0 whitespace-nowrap mt-0.5">
-                  {String(finalOldPrice).includes('د.ج') ? finalOldPrice : `${finalOldPrice} د.ج`}
-                </span>
-              </div>
-            )}
-            {/* Line 2: New Price */}
-            <p className="text-[22px] font-black text-[#000000] leading-none whitespace-nowrap">
-              {String(finalPrice).includes('د.ج') ? finalPrice : `${finalPrice} د.ج`}
+          <div className="flex items-center gap-3 w-full mt-2" dir="ltr">
+            {/* Line 1: New Price */}
+            <p className="text-[20px] md:text-[24px] font-black text-black leading-none whitespace-nowrap">
+              {formatPrice(finalPrice)}
             </p>
+            {/* Line 2: Old Price */}
+            {isValidDiscount && (
+              <span className="line-through text-gray-400 text-[12px] md:text-[14px] font-bold leading-none whitespace-nowrap mt-1">
+                {formatPrice(finalOldPrice)}
+              </span>
+            )}
           </div>
         </div>
 
