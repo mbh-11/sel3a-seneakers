@@ -556,7 +556,7 @@ const Checkout = () => {
             <label className="text-gray-400 font-black text-[10px] uppercase tracking-widest px-2">اختر المقاس (Size)</label>
             <div className="flex flex-wrap gap-2 px-1">
               {activeProduct.sizes.map(size => {
-                const isOut = (activeProduct.inventory?.[size] || 0) === 0;
+                const isOut = activeProduct.inventory?.is_out_of_stock === true || (activeProduct.inventory?.[size] || 0) === 0;
                 return (
                   <button
                     key={size}
@@ -672,11 +672,13 @@ const Checkout = () => {
               {/* Inner Dotted Bubble */}
               <button
                 onClick={handleSubmit}
-                disabled={isSubmitting}
-                className="w-full bg-white rounded-[2.5rem] py-6 px-4 border-2 border-dashed border-blue-400 flex items-center justify-center gap-4 group transition-all"
+                disabled={isSubmitting || activeProduct.inventory?.is_out_of_stock === true}
+                className={`w-full bg-white rounded-[2.5rem] py-6 px-4 border-2 border-dashed border-blue-400 flex items-center justify-center gap-4 group transition-all ${activeProduct.inventory?.is_out_of_stock === true ? 'opacity-50 cursor-not-allowed bg-gray-100' : ''}`}
               >
                 {isSubmitting ? (
                   <span className="text-blue-600 font-black animate-pulse">جاري المعالجة...</span>
+                ) : activeProduct.inventory?.is_out_of_stock === true ? (
+                  <span className="text-xl font-black text-red-500 tracking-tight">المنتج نفذت كميته</span>
                 ) : (
                   <>
                     <ShoppingBag className="text-blue-600 group-hover:scale-110 transition-transform" size={28} />

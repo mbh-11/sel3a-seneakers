@@ -436,6 +436,20 @@ const Admin = () => {
     }
   };
 
+  const toggleStockStatus = async (item) => {
+    try {
+      const isOut = item.inventory?.is_out_of_stock === true;
+      const newInventory = { ...item.inventory, is_out_of_stock: !isOut };
+      
+      const { error } = await supabase.from('products').update({ inventory: newInventory }).eq('id', item.id);
+      if (error) throw error;
+      
+      setInventory(prev => prev.map(p => p.id === item.id ? { ...p, inventory: newInventory } : p));
+    } catch (err) {
+      alert("Error: " + err.message);
+    }
+  };
+
   // --- Filtering ---
   const filteredInventory = useMemo(() => {
     const safeInv = Array.isArray(inventory) ? inventory : [];
@@ -628,7 +642,10 @@ const Admin = () => {
                         ))}
                       </div>
                     </td>
-                    <td className="p-4 md:p-6 text-right space-x-1 md:space-x-2">
+                    <td className="p-4 md:p-6 text-right space-x-1 md:space-x-2 flex justify-end items-center">
+                      <button onClick={() => toggleStockStatus(item)} className={`p-2 border-2 rounded-lg transition-all scale-75 md:scale-100 ${item.inventory?.is_out_of_stock ? 'border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white' : 'border-green-500 text-green-500 hover:bg-green-500 hover:text-white'}`} title={item.inventory?.is_out_of_stock ? 'إعادة للمخزون' : 'إخفاء (نفذت الكمية)'}>
+                        {item.inventory?.is_out_of_stock ? <CheckCircle size={14} /> : <X size={14} />}
+                      </button>
                       <button onClick={() => handleEditClick(item)} className="p-2 border-2 border-black rounded-lg hover:bg-black hover:text-white transition-all scale-75 md:scale-100">
                         <Edit size={14} />
                       </button>

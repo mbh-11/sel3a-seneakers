@@ -15,8 +15,9 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
 
   // Real Inventory Check
   const inventory = product.inventory || {};
-  const isOutOfStock = Object.values(inventory).every(qty => qty === 0);
-  const isSizeOutOfStock = (size) => (inventory[size] || 0) === 0;
+  const isForceOutOfStock = inventory.is_out_of_stock === true;
+  const isOutOfStock = isForceOutOfStock || (Object.keys(inventory).filter(k => k !== 'is_out_of_stock').length > 0 && Object.values(inventory).filter(v => typeof v === 'number').every(qty => qty === 0));
+  const isSizeOutOfStock = (size) => isForceOutOfStock || (inventory[size] || 0) === 0;
 
   // Price Calculation Logic
   let finalPrice = product.price;
@@ -114,9 +115,16 @@ const ProductCard = ({ product, isWishlistPage = false }) => {
       </motion.button>
 
       <div
-        onClick={() => navigate(`/checkout/${product.id}`, { state: { product } })}
-        className="product-image-container relative w-full aspect-[3/2] bg-gray-50 mb-2 md:mb-6 rounded-xl overflow-hidden cursor-pointer shrink-0 flex items-center justify-center"
+        onClick={() => !isOutOfStock && navigate(`/checkout/${product.id}`, { state: { product } })}
+        className={`product-image-container relative w-full aspect-[3/2] bg-gray-50 mb-2 md:mb-6 rounded-xl overflow-hidden ${isOutOfStock ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'} shrink-0 flex items-center justify-center`}
       >
+        {isOutOfStock && (
+          <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/20 backdrop-blur-[2px]">
+            <span className="bg-black text-white px-4 py-2 rounded-lg font-black uppercase text-sm md:text-base rotate-12 shadow-xl border-2 border-white/20">
+              نفذت الكمية
+            </span>
+          </div>
+        )}
         {isValidDiscount && (
           <div className="absolute top-3 left-3 z-20 bg-red-50 text-brand-red border border-red-100 text-[10px] md:text-xs font-black px-2.5 py-1 rounded-md shadow-sm">
             {finalDiscount ? (String(finalDiscount).includes('-') ? finalDiscount : `-${finalDiscount}`) : 'SALE'}
