@@ -1,5 +1,5 @@
 /**
- * Tarifs de livraison ZR Express (Départ: Tipaza)
+ * Tarifs de livraison (Départ: Tipaza)
  * Domicile (home), Bureau (office), Retour/Annulation (cancel)
  */
 export const shippingRates = {

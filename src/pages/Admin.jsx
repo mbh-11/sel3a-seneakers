@@ -416,7 +416,10 @@ const Admin = () => {
 
   const handleStatusChange = async (orderId, newStatus) => {
     try {
-      // تحديث قاعدة البيانات عبر RPC لتخطي RLS بأمان
+      let trackingNumberToSet = null;
+
+
+      // تحديث قاعدة البيانات عبر RPC لتخطي RLS بأمان (Status Update)
       const { error } = await supabase.rpc('update_order_status', {
         order_id_param: orderId,
         new_status_param: newStatus
@@ -425,14 +428,21 @@ const Admin = () => {
       if (error) throw error;
 
       // تحديث الواجهة محلياً فوراً ليشعر المستخدم بالسرعة
-      setOrders(prev => prev.map(order =>
-        order.id === orderId ? { ...order, status: newStatus } : order
-      ));
+      setOrders(prev => prev.map(order => {
+        if (order.id === orderId) {
+          return {
+            ...order,
+            status: newStatus,
+            ...(trackingNumberToSet ? { tracking_number: trackingNumberToSet } : {})
+          };
+        }
+        return order;
+      }));
 
       console.log(`Order ${orderId} status updated to ${newStatus}`);
     } catch (err) {
       console.error("Status Update Failed:", err);
-      alert("عذراً، فشل تحديث الحالة: " + err.message);
+      alert("فشل تحديث الحالة: " + err.message);
     }
   };
 
@@ -1144,6 +1154,12 @@ const Admin = () => {
                             } catch (e) { return '0 د.ج'; }
                           })()}
                         </span>
+                      </div>
+                    )}
+                    {selectedOrder.tracking_number && (
+                      <div className="mt-2 inline-flex items-center gap-1 bg-brand-red text-white px-3 py-1 rounded-full text-xs font-black tracking-widest shadow-sm">
+                        <Truck size={12} />
+                        TRACKING: {selectedOrder.tracking_number}
                       </div>
                     )}
                   </div>
