@@ -295,7 +295,7 @@ const Admin = () => {
     const widget = window.cloudinary.createUploadWidget(
       {
         cloudName: 'dp9idtrth',
-        uploadPreset: 'sel3a sneakers',
+        uploadPreset: 'sneakers',
         sources: ['local', 'url', 'camera', 'instagram'],
         multiple: !isMainImage,
         clientAllowedFormats: ['png', 'jpeg', 'jpg', 'webp', 'heic', 'heif'],
