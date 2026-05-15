@@ -30,8 +30,8 @@ export const supabaseAdmin = (() => {
 export const uploadToCloudinary = async (file) => {
   if (!file) return null;
 
-  const cloudName = 'dp9idtrth';
-  const uploadPreset = 'sneakers';
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dp9idtrth';
+  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'sneakers';
   const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`;
 
   const formData = new FormData();

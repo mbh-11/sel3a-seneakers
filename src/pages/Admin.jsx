@@ -294,8 +294,8 @@ const Admin = () => {
     // Create the upload widget
     const widget = window.cloudinary.createUploadWidget(
       {
-        cloudName: 'dp9idtrth',
-        uploadPreset: 'sneakers',
+        cloudName: import.meta.env.VITE_CLOUDINARY_CLOUD_NAME || 'dp9idtrth',
+        uploadPreset: import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET || 'sneakers',
         sources: ['local', 'url', 'camera', 'instagram'],
         multiple: !isMainImage,
         clientAllowedFormats: ['png', 'jpeg', 'jpg', 'webp', 'heic', 'heif'],
