@@ -19,8 +19,9 @@ const Navbar = () => {
     { name: 'Onitsuka Tiger', path: '/store?brand=Onitsuka Tiger', color: '#DDBB44', subtitle: 'Iconic Stripes' },
     { name: 'ON RUNNING', path: '/store?brand=ON RUNNING', color: '#C9A84C', subtitle: 'CLOUDTILT' },
     { name: 'Saucony', path: '/saucony', color: '#F8F6F1', subtitle: 'Originals' },
+    { name: 'Under Armour', path: '/under-armour', color: '#1D1D1D', subtitle: 'Protect This House' },
   ];
-  const brands = ['All', 'Nike', 'Adidas', 'New Balance', 'Asics', 'Onitsuka Tiger', 'ON RUNNING', 'Saucony'];
+  const brands = ['All', 'Nike', 'Adidas', 'New Balance', 'Asics', 'Onitsuka Tiger', 'ON RUNNING', 'Saucony', 'Under Armour'];
 
   return (
     <nav className="sticky top-0 z-50 bg-white border-b-4 border-black">

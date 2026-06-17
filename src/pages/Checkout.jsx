@@ -269,7 +269,7 @@ const Checkout = () => {
   const [phoneError, setPhoneError] = useState('');
 
   const activeProduct = directProduct || cartItems[0];
-  
+
   // Price Calculation Logic for Display
   let finalPrice = activeProduct?.price || 0;
   let finalOldPrice = activeProduct?.old_price || activeProduct?.oldPrice;

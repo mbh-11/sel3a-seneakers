@@ -121,6 +121,23 @@ const brandConfigs = {
       transition: { duration: 0.4, ease: "easeIn" }
     }
   },
+  'Under Armour': {
+    bg: 'bg-[#1D1D1D]',
+    text: 'UNDER ARMOUR',
+    textColor: 'text-white',
+    initial: { scale: 1.2, opacity: 0, y: -20 },
+    animate: {
+      scale: 1,
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" }
+    },
+    exit: {
+      scale: 0.8,
+      opacity: 0,
+      transition: { duration: 0.4, ease: "easeIn" }
+    }
+  },
   All: {
     bg: 'bg-white',
     exit: {

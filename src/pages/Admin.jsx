@@ -450,10 +450,10 @@ const Admin = () => {
     try {
       const isOut = item.inventory?.is_out_of_stock === true;
       const newInventory = { ...item.inventory, is_out_of_stock: !isOut };
-      
+
       const { error } = await supabase.from('products').update({ inventory: newInventory }).eq('id', item.id);
       if (error) throw error;
-      
+
       setInventory(prev => prev.map(p => p.id === item.id ? { ...p, inventory: newInventory } : p));
     } catch (err) {
       alert("Error: " + err.message);
@@ -599,6 +599,7 @@ const Admin = () => {
             <option value="Onitsuka Tiger">Onitsuka Tiger</option>
             <option value="ON RUNNING">ON RUNNING</option>
             <option value="Saucony">Saucony</option>
+            <option value="Under Armour">Under Armour</option>
           </select>
         </div>
         <button
@@ -804,7 +805,7 @@ const Admin = () => {
                       <div className="col-span-2">
                         <label className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2 block">Brand</label>
                         <select value={formData.brand} onChange={e => setFormData({ ...formData, brand: e.target.value })} className="w-full border-4 border-black p-4 rounded-2xl font-black uppercase outline-none cursor-pointer bg-white">
-                          <option>Nike</option><option>Adidas</option><option>New Balance</option><option>Asics</option><option>Onitsuka Tiger</option><option>ON RUNNING</option><option>Saucony</option>
+                          <option>Nike</option><option>Adidas</option><option>New Balance</option><option>Asics</option><option>Onitsuka Tiger</option><option>ON RUNNING</option><option>Saucony</option><option>Under Armour</option>
                         </select>
                       </div>
                       <div>
