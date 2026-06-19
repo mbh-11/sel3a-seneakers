@@ -101,7 +101,7 @@ const SearchOverlay = ({ isOpen, onClose }) => {
                     >
                       <div className="flex items-center">
                         <div className="w-20 h-20 bg-gray-100 rounded-xl overflow-hidden mr-6 border-2 border-black group-hover:border-white transition-colors">
-                          <img src={getOptimizedImageUrl(product.image)} alt={product.name} className="w-full h-full object-cover" />
+                          <img src={getOptimizedImageUrl(product.image, 200)} alt={product.name} className="w-full h-full object-cover" loading="lazy" />
                         </div>
                         <div>
                           <p className="text-[10px] font-black uppercase tracking-widest opacity-60">{product.brand}</p>

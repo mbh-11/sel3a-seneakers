@@ -57,7 +57,7 @@ const CartSidebar = () => {
                 cartItems.map((item) => (
                   <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`} className="flex space-x-4 border-b-2 border-gray-100 pb-6 group">
                     <div className="w-24 h-24 bg-gray-100 border-2 border-black flex-shrink-0 overflow-hidden">
-                      <img src={getOptimizedImageUrl(item.image)} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                      <img src={getOptimizedImageUrl(item.image, 200)} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform" loading="lazy" />
                     </div>
                     <div className="flex-grow">
                       <div className="flex justify-between">
