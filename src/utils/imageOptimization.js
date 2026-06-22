@@ -10,7 +10,7 @@ export const getOptimizedImageUrl = (url, width = 600) => {
   // If it's a local static asset (starts with /), just return it
   if (url.startsWith('/')) return url;
 
-  const optParams = `f_auto,q_auto,w_${width},c_fill,dpr_auto`;
+  const optParams = `f_auto,q_auto,w_${width},c_fill`;
 
   // If it's a Cloudinary URL
   if (url.includes('res.cloudinary.com')) {

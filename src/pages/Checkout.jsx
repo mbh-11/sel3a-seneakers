@@ -160,7 +160,7 @@ const SearchableSelect = ({ options, value, onChange, placeholder, icon: Icon, l
   );
 };
 
-const sendTelegramNotification = async (orderData) => {
+const sendTelegramNotification = async (orderData, existingOrdersCount = 0) => {
   const token = import.meta.env.VITE_TELEGRAM_BOT_TOKEN;
   const chatId = import.meta.env.VITE_TELEGRAM_CHAT_ID;
 
@@ -171,7 +171,12 @@ const sendTelegramNotification = async (orderData) => {
 
   const itemsList = orderData.items.map(item => `• <b>${item.name}</b> (مقاس: ${item.size})`).join('\n');
 
-  const text = `🔔 <b>طلبية جديدة من المتجر!</b>\n\n👤 <b>الاسم:</b> ${orderData.customer}\n📞 <b>الهاتف:</b> ${orderData.phone}\n📍 <b>الولاية:</b> ${orderData.state}\n📌 <b>العنوان/البلدية:</b> ${orderData.address}\n👟 <b>المنتجات:</b>\n${itemsList}\n\n💰 <b>السعر الإجمالي:</b> ${orderData.total} د.ج 🔥`;
+  const customerStatus = existingOrdersCount > 0 
+    ? `\n\n💎 <b>حالة الزبون:</b> زبون قيّم (عدد الطلبيات السابقة: ${existingOrdersCount})` 
+    : `\n\n🆕 <b>حالة الزبون:</b> زبون جديد (عدد الطلبيات السابقة: 0)`;
+
+  const text = `🔔 <b>طلبية جديدة من المتجر!</b>${customerStatus}\n\n👤 <b>الاسم:</b> ${orderData.customer}\n📞 <b>الهاتف:</b> ${orderData.phone}\n📍 <b>الولاية:</b> ${orderData.state}\n📌 <b>العنوان/البلدية:</b> ${orderData.address}\n👟 <b>المنتجات:</b>\n${itemsList}\n\n💰 <b>السعر الإجمالي:</b> ${orderData.total} د.ج 🔥`;
+
 
   const sendMessage = async () => {
     return fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -382,6 +387,20 @@ const Checkout = () => {
     };
 
     try {
+      // التحقق مما إذا كان الزبون قام بطلبيات سابقة بناءً على رقم الهاتف
+      let existingOrdersCount = 0;
+      try {
+        const { count, error: countError } = await supabase
+          .from('orders')
+          .select('*', { count: 'exact', head: true })
+          .eq('phone', formData.phone);
+        if (!countError) {
+          existingOrdersCount = count || 0;
+        }
+      } catch (e) {
+        console.error('Error checking previous orders:', e);
+      }
+
       const { data, error } = await supabase.rpc('process_order_with_stock', {
         order_data_param: orderData
       });
@@ -389,7 +408,7 @@ const Checkout = () => {
       if (error) throw error;
 
       // Send Telegram Notification
-      await sendTelegramNotification(orderData);
+      await sendTelegramNotification(orderData, existingOrdersCount);
 
       trackPurchase(total, itemsToBuy, {
         phone: formData.phone,
